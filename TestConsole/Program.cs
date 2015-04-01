@@ -25,7 +25,7 @@ namespace TestConsole
                     Console.WriteLine(x.Show().Result);
                     Console.ReadKey();
                 });
-
+            
             Console.ReadKey();
         }
     }

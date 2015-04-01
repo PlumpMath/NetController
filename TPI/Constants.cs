@@ -7,6 +7,7 @@ namespace TPI
 
         public const string IP_Invalid = "Invalid receiver address";
         public const string TPI_Object_Can_Not_Show = "This object can't be shown";
+        public const string TPI_Not_Supported_Cmd = "This command not supported by this receiver";
 
         // 0: protocol, 'http' or 'https'
         // 1: address, name or ip
@@ -24,5 +25,8 @@ namespace TPI
         public const string TPI_Verb_Delete = "delete";
         public const string TPI_Verb_Download = "download";
         public const string TPI_Verb_Upload = "upload";
+
+        // verb, object
+        public const string TPI_Regex_Parse_Commands = @"verb=(\S+)\s+object=(\S+)";
     }
 }

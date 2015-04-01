@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
@@ -14,48 +16,61 @@ namespace TPI
         Https
     }
 
-    //public enum TPIObjectTypes
-    //{
-    //    SerialNumber,
-    //    UtcTime,
-    //    GpsTime,
-    //    Position,
-    //    Voltages,
-    //    Temperature,
-    //    Commands,
-    //    TrackingStatus,
-    //    Tracking,
-    //    GpsSatControls,
-    //    SbasSatControls,
-    //    GlonassSatControls,
-    //    Ephemeris,
-    //    Almanac,
-    //    GpsHealth,
-    //    GpsUtcData,
-    //    GpsIonoData,
-    //    GnssData,
-    //    System,
-    //    ReferenceFrequency,
-    //    ElevationMask,
-    //    PdopMask,
-    //    ClockSteering,
-    //    MultipathReject,
-    //    PPS,
-    //    AntennaTypes,
-    //    Antenna,
-    //    RtkControls,
-    //    IoPorts,
-    //    IoPort,
-    //    RefStation,
-    //    OmniStarSeed,
-    //    FirmwareVersion,
-    //    FirmwareWarranty,
-    //    FirmwareFile,
-    //}
+    enum TPIObjectTypes
+    {
+        SerialNumber,
+        UtcTime,
+        GpsTime,
+        Position,
+        Voltages,
+        Temperature,
+        Commands,
+        TrackingStatus,
+        Tracking,
+        GpsSatControls,
+        SbasSatControls,
+        GlonassSatControls,
+        Ephemeris,
+        Almanac,
+        GpsHealth,
+        GpsUtcData,
+        GpsIonoData,
+        GnssData,
+        System,
+        ReferenceFrequency,
+        ElevationMask,
+        PdopMask,
+        ClockSteering,
+        MultipathReject,
+        PPS,
+        AntennaTypes,
+        Antenna,
+        RtkControls,
+        IoPorts,
+        IoPort,
+        RefStation,
+        OmniStarSeed,
+        FirmwareVersion,
+        FirmwareWarranty,
+        FirmwareFile,
+    }
+
+    enum TPIVerbTypes
+    {
+        Show,
+        Set,
+        Reset,
+        Enable,
+        Disable,
+        Delete,
+        Download,
+        Upload
+    }
 
     public class TPIReceiver : DisposableClass
     {
         private HttpClient client;
+        private HashSet<string> supportedCmds;
 
         public TPIReceiver(string address, string user = "", string password = "", TPIProtocols protocol = TPIProtocols.Http)
         {
@@ -72,6 +87,20 @@ namespace TPI
                 var header = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
                 client.DefaultRequestHeaders.Authorization = header;
             }
+
+            supportedCmds = new HashSet<string>();
+            supportedCmds.Add("Show:Commands");
+
+            ExecuteCommand(TPIVerbTypes.Show, TPIObjectTypes.Commands, pattern: Constants.TPI_Regex_Parse_Commands).ContinueWith(x =>
+                {
+                    if (x.Status == TaskStatus.RanToCompletion)
+                    {
+                        foreach (Match match in x.Result)
+                        {
+                            supportedCmds.Add(match.Groups[1].Value + ":" + match.Groups[2].Value);
+                        }
+                    }
+                }).Wait();
         }
 
         public TPIProtocols Protocol { get; private set; }
@@ -98,6 +127,17 @@ namespace TPI
             }
 
             return default(T);
+        }
+
+        private async Task<MatchCollection> ExecuteCommand(TPIVerbTypes verb, TPIObjectTypes obj, string parameters = "", string pattern = "")
+        {
+            if (!supportedCmds.Contains(verb + ":" + obj))
+            {
+                throw new NotSupportedException(Constants.TPI_Not_Supported_Cmd);
+            }
+            var ret = GetStringAsync(verb.ToString(), obj.ToString(), parameters);
+            var matches = Regex.Matches(await ret, pattern, RegexOptions.IgnoreCase);
+            return matches;
         }
 
         internal async Task<string> GetStringAsync(string verb, string objName, string parameters = "")
