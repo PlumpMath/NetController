@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace TPI
 {
@@ -124,11 +125,9 @@ namespace TPI
             return default(T);
         }
 
-        //public async Task<string> ShowAsync(TPIObject obj)
-        //{
-        //    if (!(obj is ICanShow))
-        //        throw new ArgumentException(Constants.TPI_Object_Can_Not_Show);
-        //    return await client.GetStringAsync(string.Format(Constants.TPI_Relative_Uri_Format, Constants.TPI_Verb_Show, obj.Name, string.Empty));
-        //}
+        internal async Task<string> GetStringAsync(string verb, string objName, string parameters = "")
+        {
+            return await client.GetStringAsync(string.Format(Constants.TPI_Relative_Uri_Format, verb, objName, parameters));
+        }
     }
 }

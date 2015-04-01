@@ -1,4 +1,6 @@
-﻿
+﻿using System;
+using System.Threading.Tasks;
+
 namespace TPI
 {
     public class TPIObject
@@ -10,6 +12,13 @@ namespace TPI
             this.receiver = receiver;
         }
 
+        protected virtual async Task<string> ShowAsync()
+        {
+            if (!(this is ICanShow))
+                throw new ArgumentException(Constants.TPI_Object_Can_Not_Show);
+            return await receiver.GetStringAsync(Constants.TPI_Verb_Show, Name);
+        }
+
         public virtual string Name
         {
             get
@@ -18,13 +27,22 @@ namespace TPI
             }
         }
     }
-    
+
     public class TPISerialNumber : TPIObject, ICanShow
     {
         internal TPISerialNumber()
         {
 
         }
+
+        #region ICanShow Members
+
+        public async Task<string> Show()
+        {
+            return await base.ShowAsync();
+        }
+
+        #endregion
     }
 
     public class TPIUtcTime : TPIObject, ICanShow
@@ -33,6 +51,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public async Task<string> Show()
+        {
+            return await base.ShowAsync();
+        }
+
+        #endregion
     }
 
     public class TPIGpsTime : TPIObject, ICanShow
@@ -41,6 +68,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public async Task<string> Show()
+        {
+            return await base.ShowAsync();
+        }
+
+        #endregion
     }
 
     public class TPIPosition : TPIObject, ICanShow
@@ -49,6 +85,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public async Task<string> Show()
+        {
+            return await base.ShowAsync();
+        }
+
+        #endregion
     }
 
     public class TPIVoltages : TPIObject, ICanShow
@@ -57,6 +102,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public async Task<string> Show()
+        {
+            return await base.ShowAsync();
+        }
+
+        #endregion
     }
 
     public class TPITemperature : TPIObject, ICanShow
@@ -65,6 +119,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public async Task<string> Show()
+        {
+            return await base.ShowAsync();
+        }
+
+        #endregion
     }
 
     public class TPICommands : TPIObject, ICanShow
@@ -73,6 +136,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public async Task<string> Show()
+        {
+            return await base.ShowAsync();
+        }
+
+        #endregion
     }
 
     public class TPITrackingStatus : TPIObject, ICanShow
@@ -81,6 +153,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public async Task<string> Show()
+        {
+            return await base.ShowAsync();
+        }
+
+        #endregion
     }
 
     public class TPITracking : TPIObject, ICanShow, ICanSet
@@ -89,6 +170,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIGpsSatControls : TPIObject, ICanShow, ICanSet
@@ -97,6 +187,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPISbasSatControls : TPIObject, ICanShow, ICanSet
@@ -105,6 +204,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIGlonassSatControls : TPIObject, ICanShow, ICanSet
@@ -113,6 +221,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIEphemeris : TPIObject, ICanShow
@@ -121,6 +238,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIAlmanac : TPIObject, ICanShow
@@ -129,6 +255,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIGpsHealth : TPIObject, ICanShow
@@ -137,6 +272,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIGpsUtcData : TPIObject, ICanShow
@@ -145,6 +289,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIGpsIonoData : TPIObject, ICanShow
@@ -153,6 +306,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIGnssData : TPIObject, ICanReset
@@ -177,6 +339,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIElevationMask : TPIObject, ICanShow, ICanSet
@@ -185,6 +356,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIPdopMask : TPIObject, ICanShow, ICanSet
@@ -193,6 +373,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIClockSteering : TPIObject, ICanShow, ICanSet
@@ -201,6 +390,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIMultipathReject : TPIObject, ICanShow, ICanSet
@@ -209,6 +407,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIPPS : TPIObject, ICanShow, ICanSet
@@ -217,6 +424,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIAntennaTypes : TPIObject, ICanShow
@@ -225,6 +441,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIAntenna : TPIObject, ICanShow, ICanSet
@@ -233,6 +458,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIRtkControls : TPIObject, ICanShow, ICanSet
@@ -241,6 +475,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIIoPorts : TPIObject, ICanShow
@@ -249,6 +492,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIIoPort : TPIObject, ICanShow, ICanSet, ICanDelete
@@ -257,6 +509,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIRefStation : TPIObject, ICanShow, ICanSet
@@ -265,6 +526,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIOmniStarSeed : TPIObject, ICanSet
@@ -281,6 +551,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIFirmwareWarranty : TPIObject, ICanShow, ICanSet
@@ -289,6 +568,15 @@ namespace TPI
         {
 
         }
+
+        #region ICanShow Members
+
+        public Task<string> Show()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class TPIFirmwareFile : TPIObject, ICanUpload

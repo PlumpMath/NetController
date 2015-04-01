@@ -1,41 +1,48 @@
-﻿namespace TPI
+﻿using System.Threading.Tasks;
+
+namespace TPI
 {
-    interface ICanShow
+    public interface ICanShow
+    {
+        Task<string> Show();
+    }
+
+    public interface ICanShow<T> : ICanShow
+    {
+        new Task<T> Show();
+    }
+
+    public interface ICanSet
     {
 
     }
 
-    interface ICanSet
+    public interface ICanReset
     {
 
     }
 
-    interface ICanReset
+    public interface ICanEnable
     {
 
     }
 
-    interface ICanEnable
+    public interface ICanDisable
     {
 
     }
 
-    interface ICanDisable
+    public interface ICanDelete
     {
 
     }
 
-    interface ICanDelete
+    public interface ICanDownload
     {
 
     }
 
-    interface ICanDownload
-    {
-
-    }
-
-    interface ICanUpload
+    public interface ICanUpload
     {
 
     }
