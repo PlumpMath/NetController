@@ -105,5 +105,11 @@ namespace TPI
         public const string TPI_Regex_Parse_Antenna_MeasMethod = "measMethod";
         public const string TPI_Regex_Parse_Antenna_Height = "height";
         public const string TPI_Regex_Parse_Antenna_SN = "serial";
+
+        public const string TPI_Regex_Parse_TrackingStatus = @"Prn=(?<Prn>(\d+))\s+Sys=(?<Sys>(\S+))\s+Elv=(?<Elv>([\-\+]?\d+))\s+Azm=(?<Azm>(\d+))";
+        public const string TPI_Regex_Parse_TrackingStatus_Prn = "Prn";
+        public const string TPI_Regex_Parse_TrackingStatus_Sys = "Sys";
+        public const string TPI_Regex_Parse_TrackingStatus_Elv = "Elv";
+        public const string TPI_Regex_Parse_TrackingStatus_Azm = "Azm";
     }
 }

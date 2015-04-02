@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace TPI
 {
-
     public class GpsTime
     {
         /// <summary>
@@ -228,6 +223,31 @@ namespace TPI
         public override string ToString()
         {
             return string.Format("{0},{1},{2},{3},{4}", Type, Name, MeasureMethod, Height, SN);
+        }
+    }
+
+    public class Satellite
+    {
+        /// <summary>
+        /// The Prn-Code for the tracked satellite.
+        /// </summary>
+        public int Prn { get; internal set; }
+        /// <summary>
+        /// The system type for the tracked satellite - GPS, GLN (Glonass), GAL (Galileo), SBS (Sbas/Waas/Egnos), etc.
+        /// </summary>
+        public string System { get; internal set; }
+        /// <summary>
+        /// The satellite's elevation in degrees above horizontal.
+        /// </summary>
+        public int Elevation { get; internal set; }
+        /// <summary>
+        /// The satellite's azimuth in degrees relative to True North.
+        /// </summary>
+        public int Azimuth { get; internal set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0},{1},{2},{3}", Prn, System, Elevation, Azimuth);
         }
     }
 }

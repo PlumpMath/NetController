@@ -47,8 +47,10 @@ namespace TestConsole
             ant.Height = ant.Height + 0.1;
             receiver.Antenna = ant;
             Output("AntennaSetting After Update", receiver.Antenna);
-            //Output("Restart Result", receiver.RestartReceiver());
 
+            Output("TrackingSatellites", receiver.TrackingSatellites);
+
+            //Output("Restart Result", receiver.RestartReceiver());
             //timer.Start();
             Console.ReadKey();
         }

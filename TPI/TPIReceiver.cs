@@ -16,59 +16,59 @@ namespace TPI
         Https
     }
 
-    enum TPIObjectTypes
-    {
-        SerialNumber,
-        UtcTime,
-        GpsTime,
-        Position,
-        Voltages,
-        Temperature,
-        Commands,
-        TrackingStatus,
-        Tracking,
-        GpsSatControls,
-        SbasSatControls,
-        GlonassSatControls,
-        Ephemeris,
-        Almanac,
-        GpsHealth,
-        GpsUtcData,
-        GpsIonoData,
-        GnssData,
-        System,
-        ReferenceFrequency,
-        ElevationMask,
-        PdopMask,
-        ClockSteering,
-        MultipathReject,
-        PPS,
-        AntennaTypes,
-        Antenna,
-        RtkControls,
-        IoPorts,
-        IoPort,
-        RefStation,
-        OmniStarSeed,
-        FirmwareVersion,
-        FirmwareWarranty,
-        FirmwareFile,
-    }
-
-    enum TPIVerbTypes
-    {
-        Show,
-        Set,
-        Reset,
-        Enable,
-        Disable,
-        Delete,
-        Download,
-        Upload
-    }
-
     public class TPIReceiver : DisposableClass
     {
+        enum TPIObjectTypes
+        {
+            SerialNumber,
+            UtcTime,
+            GpsTime,
+            Position,
+            Voltages,
+            Temperature,
+            Commands,
+            TrackingStatus,
+            Tracking,
+            GpsSatControls,
+            SbasSatControls,
+            GlonassSatControls,
+            Ephemeris,
+            Almanac,
+            GpsHealth,
+            GpsUtcData,
+            GpsIonoData,
+            GnssData,
+            System,
+            ReferenceFrequency,
+            ElevationMask,
+            PdopMask,
+            ClockSteering,
+            MultipathReject,
+            PPS,
+            AntennaTypes,
+            Antenna,
+            RtkControls,
+            IoPorts,
+            IoPort,
+            RefStation,
+            OmniStarSeed,
+            FirmwareVersion,
+            FirmwareWarranty,
+            FirmwareFile,
+        }
+
+        enum TPIVerbTypes
+        {
+            Show,
+            Set,
+            Reset,
+            Enable,
+            Disable,
+            Delete,
+            Download,
+            Upload
+        }
+
         private HttpClient client;
         private HashSet<string> supportedCmds;
 
@@ -189,6 +189,34 @@ namespace TPI
                     }
                 }).Wait();
                 return position;
+            }
+        }
+
+        /// <summary>
+        /// Returns which satellites are currently being tracked and several parameters about those satellites.
+        /// </summary>
+        public IReadOnlyList<Satellite> TrackingSatellites
+        {
+            get
+            {
+                var sats = new List<Satellite>();
+                ExecuteCommand(TPIVerbTypes.Show, TPIObjectTypes.TrackingStatus, pattern: Constants.TPI_Regex_Parse_TrackingStatus).ContinueWith(x =>
+                {
+                    if (x.Status == TaskStatus.RanToCompletion)
+                    {
+                        foreach (Match match in x.Result)
+                        {
+                            sats.Add(new Satellite()
+                            {
+                                Prn = int.Parse(match.Groups[Constants.TPI_Regex_Parse_TrackingStatus_Prn].Value),
+                                System = match.Groups[Constants.TPI_Regex_Parse_TrackingStatus_Sys].Value,
+                                Elevation = int.Parse(match.Groups[Constants.TPI_Regex_Parse_TrackingStatus_Elv].Value),
+                                Azimuth = int.Parse(match.Groups[Constants.TPI_Regex_Parse_TrackingStatus_Azm].Value)
+                            });
+                        }
+                    }
+                }).Wait();
+                return sats;
             }
         }
 
