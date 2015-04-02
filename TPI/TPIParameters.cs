@@ -16,5 +16,9 @@ namespace TPI
 
     class TPIParameters
     {
+        public string MakeOneParameter(string name, object value)
+        {
+            return string.Format(Constants.TPI_Format_Parameter, Constants.TPI_Regex_Parse_Mask_Mask, TPIArbitraryChars.GetEncodedString(value.ToString()));
+        }
     }
 }

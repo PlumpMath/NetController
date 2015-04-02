@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Timers;
 using TPI;
 
@@ -8,10 +9,10 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            Console.SetBufferSize(200, Int16.MaxValue - 1);
+            //Console.SetBufferSize(80, Int16.MaxValue - 1);
 
             var receiver = new TPIReceiver("10.3.97.150", "admin", "password");
-            var timer = new Timer(100);
+            var timer = new Timer(500);
             timer.Elapsed += (sender, e) =>
             {
                 Output("Position", receiver.Position);
@@ -21,8 +22,22 @@ namespace TestConsole
             Output("RxType", receiver.RxType);
             Output("UtcTime", receiver.UtcTime);
             Output("GpsTime", receiver.GpsTime);
+            Output("Voltages", receiver.Voltages);
+            Output("Temperature", receiver.Temperature);
 
-            timer.Start();
+            Output("FirmwareVersion", receiver.FirmwareVersion);
+            Output("FirmwareVersionDate", receiver.FirmwareVersionDate);
+            Output("FirmwareWarrantyDate", receiver.FirmwareWarrantyDate);
+
+            Output("ElevationMask", receiver.ElevationMask);
+            receiver.ElevationMask = DateTime.Now.Second;
+            Output("ElevationMask After Update", receiver.ElevationMask);
+
+            Output("PdopMask", receiver.PdopMask);
+            receiver.PdopMask = DateTime.Now.Second;
+            Output("PdopMask After Update", receiver.PdopMask);
+
+            //timer.Start();
             Console.ReadKey();
         }
 
@@ -31,7 +46,15 @@ namespace TestConsole
             Console.Write("---");
             Console.Write(key);
             Console.Write("---\n");
-            Console.WriteLine(value);
+            if (value is IList)
+            {
+                foreach (var obj in (value as IList))
+                {
+                    Console.WriteLine(obj);
+                }
+            }
+            else
+                Console.WriteLine(value);
         }
     }
 }

@@ -5,17 +5,21 @@ namespace TPI
     {
         public const string IP_Regex = @"^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$";
 
-        public const string IP_Invalid = "Invalid receiver address";
-        public const string TPI_Object_Can_Not_Show = "This object can't be shown";
-        public const string TPI_Not_Supported_Cmd = "This command not supported by this receiver";
+        public const string IP_Msg_Invalid = "Invalid receiver address";
+        public const string TPI_Msg_Object_Can_Not_Show = "This object can't be shown";
+        public const string TPI_Msg_Not_Supported_Cmd = "This command not supported by this receiver";
+        public const string TPI_Msg_ElevationMask_OutOfRange = "Elevation Mask is in degrees, between -10 and 90";
+        public const string TPI_Msg_PdopMask_OutOfRange = "PDOP is a unitless measurement. Valid range is 0 to 99.";
+        public const string TPI_Msg_Operation_Failed = "Operation Failed";
 
         // 0: protocol, 'http' or 'https'
         // 1: address, name or ip
         // 2: verb, show, set, reset, enable, disable, delete, download, upload
         // 3: an Object type on which the action is to be performed. Objects can be: A state or characteristic of the system, such as the Serial Number. A function control, such as ElevationMask or data logging Session. A file object, like a logged data file, or a firmware file.
         // 4: parameters, multi-pairs like &param=value&param=value
-        public const string TPI_Base_Uri_Format = @"{0}://{1}";
-        public const string TPI_Relative_Uri_Format = @"/prog/{0}?{1}{2}";
+        public const string TPI_Format_Base_Uri = @"{0}://{1}";
+        public const string TPI_Format_Relative_Uri = @"/prog/{0}?{1}{2}";
+        public const string TPI_Format_Parameter = @"&{0}={1}";
 
         public const string TPI_Verb_Show = "show";
         public const string TPI_Verb_Set = "set";
@@ -67,5 +71,28 @@ namespace TPI
         public const string TPI_Regex_Parse_Position_VDOP = "VDOP";
         public const string TPI_Regex_Parse_Position_TDOP = "TDOP";
         public const string TPI_Regex_Parse_Position_Qualifiers = "Qualifiers";
+
+        // port, volts, cap
+        public const string TPI_Regex_Parse_Voltages = @"port=(?<port>(.*))\s+volts=(?<volts>([0-9]*(\.[0-9]*)?))\s+cap=(?<cap>(\d+))%";
+        public const string TPI_Regex_Parse_Voltages_Port = "port";
+        public const string TPI_Regex_Parse_Voltages_Volts = "volts";
+        public const string TPI_Regex_Parse_Voltages_Capacity = "cap";
+
+        // temp
+        public const string TPI_Regex_Parse_Temperature = @"temp=(?<temp>([\-\+]?[0-9]*(\.[0-9]+)?))";
+        public const string TPI_Regex_Parse_Temperature_Temp = "temp";
+
+        // version, date
+        public const string TPI_Regex_Parse_FirmwareVersion = @"version=(?<version>(\S+))\s+date=(?<date>(\S+))";
+        public const string TPI_Regex_Parse_FirmwareVersion_Version = "version";
+        public const string TPI_Regex_Parse_FirmwareVersion_Date = "date";
+
+        // date
+        public const string TPI_Regex_Parse_FirmwareWarranty = @"date=(?<date>(\S+))";
+        public const string TPI_Regex_Parse_FirmwareWarranty_Date = "date";
+
+        // temp
+        public const string TPI_Regex_Parse_Mask = @"mask=(?<mask>(\d+))";
+        public const string TPI_Regex_Parse_Mask_Mask = "mask";
     }
 }

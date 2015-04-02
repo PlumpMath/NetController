@@ -15,7 +15,7 @@ namespace TPI
         protected virtual async Task<string> ShowAsync()
         {
             if (!(this is ICanShow))
-                throw new ArgumentException(Constants.TPI_Object_Can_Not_Show);
+                throw new ArgumentException(Constants.TPI_Msg_Object_Can_Not_Show);
             return await receiver.GetStringAsync(Constants.TPI_Verb_Show, Name);
         }
 
