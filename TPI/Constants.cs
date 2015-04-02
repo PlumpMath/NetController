@@ -27,6 +27,45 @@ namespace TPI
         public const string TPI_Verb_Upload = "upload";
 
         // verb, object
-        public const string TPI_Regex_Parse_Commands = @"verb=(\S+)\s+object=(\S+)";
+        public const string TPI_Regex_Parse_Commands = @"verb=(?<verb>(\S+))\s+object=(?<object>(\S+))";
+        public const string TPI_Regex_Parse_Commands_Verb = "verb";
+        public const string TPI_Regex_Parse_Commands_Object = "object";
+
+        // sn, rxType
+        public const string TPI_Regex_Parse_SerialNumber = @"sn=(?<sn>(\S+))\s+(rxType=""(?<rxType>(.+))"")?";
+        public const string TPI_Regex_Parse_SerialNumber_SN = "sn";
+        public const string TPI_Regex_Parse_SerialNumber_RxType = "rxType";
+
+        // year, month, day, hour, minute, second, julianDay
+        public const string TPI_Regex_Parse_UtcTime = @"year=(?<year>(\d+))\s+month=(?<month>(\d+))\s+day=(?<day>(\d+))\s+hour=(?<hour>(\d+))\s+minute=(?<minute>(\d+))\s+second=(?<second>(\d+))\s+julianDay=(?<julianDay>(\d+))";
+        public const string TPI_Regex_Parse_UtcTime_Year = "year";
+        public const string TPI_Regex_Parse_UtcTime_Month = "month";
+        public const string TPI_Regex_Parse_UtcTime_Day = "day";
+        public const string TPI_Regex_Parse_UtcTime_Hour = "hour";
+        public const string TPI_Regex_Parse_UtcTime_Minute = "minute";
+        public const string TPI_Regex_Parse_UtcTime_Second = "second";
+        public const string TPI_Regex_Parse_UtcTime_JulianDay = "julianDay";
+
+        public const string TPI_Regex_Parse_GpsTime = @"gpsweek=(?<gpsweek>(\d+))\s+weekseconds=(?<weekseconds>(\d+))";
+        public const string TPI_Regex_Parse_GpsTime_GpsWeek = "gpsweek";
+        public const string TPI_Regex_Parse_GpsTime_WeekSeconds = "weekseconds";
+
+        // GpsWeek, WeekSeconds, Latitude, Longitude, ClockOffset, ClockDrift, VelNorth, VelEast, VelUp, PDOP, HDOP, VDOP, TDOP
+        public const string TPI_Regex_Parse_Position = @"GpsWeek\s+(?<GpsWeek>(\d+))\s+WeekSeconds\s+(?<WeekSeconds>([\-\+]?[0-9]*(\.[0-9]+)?))\s+Latitude\s+(?<Latitude>([\-\+]?[0-9]*(\.[0-9]+)?)).+\s+Longitude\s+(?<Longitude>([\-\+]?[0-9]*(\.[0-9]+)?)).+\s+Altitude\s+(?<Altitude>([\-\+]?[0-9]*(\.[0-9]+)?)).+\s+Qualifiers\s+(?<Qualifiers>(\S+))\s+Satellites\s+(?<Satellites>(([0-9]*,?)*)).+\s+ClockOffset\s+(?<ClockOffset>([\-\+]?[0-9]*(\.[0-9]+)?)).*\s+ClockDrift\s+(?<ClockDrift>([\-\+]?[0-9]*(\.[0-9]+)?)).*\s+VelNorth\s+(?<VelNorth>([\-\+]?[0-9]*(\.[0-9]+)?)).*\s+VelEast\s+(?<VelEast>([\-\+]?[0-9]*(\.[0-9]+)?)).*\s+VelUp\s+(?<VelUp>([\-\+]?[0-9]*(\.[0-9]+)?)).*\s+PDOP\s+(?<PDOP>([0-9]*(\.[0-9]+)?)).*\s+HDOP\s+(?<HDOP>([0-9]*(\.[0-9]+)?)).*\s+VDOP\s+(?<VDOP>([0-9]*(\.[0-9]+)?)).*\s+TDOP\s+(?<TDOP>([0-9]*(\.[0-9]+)?))";
+        public const string TPI_Regex_Parse_Position_GpsWeek = "GpsWeek";
+        public const string TPI_Regex_Parse_Position_WeekSeconds = "WeekSeconds";
+        public const string TPI_Regex_Parse_Position_Latitude = "Latitude";
+        public const string TPI_Regex_Parse_Position_Longitude = "Longitude";
+        public const string TPI_Regex_Parse_Position_Altitude = "Altitude";
+        public const string TPI_Regex_Parse_Position_ClockOffset = "ClockOffset";
+        public const string TPI_Regex_Parse_Position_ClockDrift = "ClockDrift";
+        public const string TPI_Regex_Parse_Position_VelNorth = "VelNorth";
+        public const string TPI_Regex_Parse_Position_VelEast = "VelEast";
+        public const string TPI_Regex_Parse_Position_VelUp = "VelUp";
+        public const string TPI_Regex_Parse_Position_PDOP = "PDOP";
+        public const string TPI_Regex_Parse_Position_HDOP = "HDOP";
+        public const string TPI_Regex_Parse_Position_VDOP = "VDOP";
+        public const string TPI_Regex_Parse_Position_TDOP = "TDOP";
+        public const string TPI_Regex_Parse_Position_Qualifiers = "Qualifiers";
     }
 }

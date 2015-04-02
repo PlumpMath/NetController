@@ -2,47 +2,47 @@
 
 namespace TPI
 {
-    public interface ICanShow
+    internal interface ICanShow
     {
         Task<string> Show();
     }
 
-    public interface ICanShow<T> : ICanShow
+    internal interface ICanShow<T> : ICanShow
     {
         new Task<T> Show();
     }
 
-    public interface ICanSet
+    internal interface ICanSet
     {
 
     }
 
-    public interface ICanReset
+    internal interface ICanReset
     {
 
     }
 
-    public interface ICanEnable
+    internal interface ICanEnable
     {
 
     }
 
-    public interface ICanDisable
+    internal interface ICanDisable
     {
 
     }
 
-    public interface ICanDelete
+    internal interface ICanDelete
     {
 
     }
 
-    public interface ICanDownload
+    internal interface ICanDownload
     {
 
     }
 
-    public interface ICanUpload
+    internal interface ICanUpload
     {
 
     }

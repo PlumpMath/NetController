@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace TPI
 {
-    public class TPIObject
+    internal class TPIObject
     {
         protected TPIReceiver receiver;
 
@@ -28,7 +28,7 @@ namespace TPI
         }
     }
 
-    public class TPISerialNumber : TPIObject, ICanShow
+    internal class TPISerialNumber : TPIObject, ICanShow
     {
         internal TPISerialNumber()
         {
@@ -45,7 +45,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIUtcTime : TPIObject, ICanShow
+    internal class TPIUtcTime : TPIObject, ICanShow
     {
         internal TPIUtcTime()
         {
@@ -62,7 +62,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIGpsTime : TPIObject, ICanShow
+    internal class TPIGpsTime : TPIObject, ICanShow
     {
         internal TPIGpsTime()
         {
@@ -79,7 +79,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIPosition : TPIObject, ICanShow
+    internal class TPIPosition : TPIObject, ICanShow
     {
         internal TPIPosition()
         {
@@ -96,7 +96,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIVoltages : TPIObject, ICanShow
+    internal class TPIVoltages : TPIObject, ICanShow
     {
         internal TPIVoltages()
         {
@@ -113,7 +113,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPITemperature : TPIObject, ICanShow
+    internal class TPITemperature : TPIObject, ICanShow
     {
         internal TPITemperature()
         {
@@ -130,7 +130,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPICommands : TPIObject, ICanShow
+    internal class TPICommands : TPIObject, ICanShow
     {
         internal TPICommands()
         {
@@ -147,7 +147,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPITrackingStatus : TPIObject, ICanShow
+    internal class TPITrackingStatus : TPIObject, ICanShow
     {
         internal TPITrackingStatus()
         {
@@ -164,7 +164,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPITracking : TPIObject, ICanShow, ICanSet
+    internal class TPITracking : TPIObject, ICanShow, ICanSet
     {
         internal TPITracking()
         {
@@ -181,7 +181,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIGpsSatControls : TPIObject, ICanShow, ICanSet
+    internal class TPIGpsSatControls : TPIObject, ICanShow, ICanSet
     {
         internal TPIGpsSatControls()
         {
@@ -198,7 +198,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPISbasSatControls : TPIObject, ICanShow, ICanSet
+    internal class TPISbasSatControls : TPIObject, ICanShow, ICanSet
     {
         internal TPISbasSatControls()
         {
@@ -215,7 +215,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIGlonassSatControls : TPIObject, ICanShow, ICanSet
+    internal class TPIGlonassSatControls : TPIObject, ICanShow, ICanSet
     {
         internal TPIGlonassSatControls()
         {
@@ -232,7 +232,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIEphemeris : TPIObject, ICanShow
+    internal class TPIEphemeris : TPIObject, ICanShow
     {
         internal TPIEphemeris()
         {
@@ -249,7 +249,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIAlmanac : TPIObject, ICanShow
+    internal class TPIAlmanac : TPIObject, ICanShow
     {
         internal TPIAlmanac()
         {
@@ -266,7 +266,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIGpsHealth : TPIObject, ICanShow
+    internal class TPIGpsHealth : TPIObject, ICanShow
     {
         internal TPIGpsHealth()
         {
@@ -283,7 +283,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIGpsUtcData : TPIObject, ICanShow
+    internal class TPIGpsUtcData : TPIObject, ICanShow
     {
         internal TPIGpsUtcData()
         {
@@ -300,7 +300,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIGpsIonoData : TPIObject, ICanShow
+    internal class TPIGpsIonoData : TPIObject, ICanShow
     {
         internal TPIGpsIonoData()
         {
@@ -317,7 +317,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIGnssData : TPIObject, ICanReset
+    internal class TPIGnssData : TPIObject, ICanReset
     {
         internal TPIGnssData()
         {
@@ -325,7 +325,7 @@ namespace TPI
         }
     }
 
-    public class TPISystem : TPIObject, ICanReset
+    internal class TPISystem : TPIObject, ICanReset
     {
         internal TPISystem()
         {
@@ -333,7 +333,7 @@ namespace TPI
         }
     }
 
-    public class TPIReferenceFrequency : TPIObject, ICanShow, ICanSet
+    internal class TPIReferenceFrequency : TPIObject, ICanShow, ICanSet
     {
         internal TPIReferenceFrequency()
         {
@@ -350,7 +350,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIElevationMask : TPIObject, ICanShow, ICanSet
+    internal class TPIElevationMask : TPIObject, ICanShow, ICanSet
     {
         internal TPIElevationMask()
         {
@@ -367,7 +367,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIPdopMask : TPIObject, ICanShow, ICanSet
+    internal class TPIPdopMask : TPIObject, ICanShow, ICanSet
     {
         internal TPIPdopMask()
         {
@@ -384,7 +384,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIClockSteering : TPIObject, ICanShow, ICanSet
+    internal class TPIClockSteering : TPIObject, ICanShow, ICanSet
     {
         internal TPIClockSteering()
         {
@@ -401,7 +401,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIMultipathReject : TPIObject, ICanShow, ICanSet
+    internal class TPIMultipathReject : TPIObject, ICanShow, ICanSet
     {
         internal TPIMultipathReject()
         {
@@ -418,7 +418,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIPPS : TPIObject, ICanShow, ICanSet
+    internal class TPIPPS : TPIObject, ICanShow, ICanSet
     {
         internal TPIPPS()
         {
@@ -435,7 +435,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIAntennaTypes : TPIObject, ICanShow
+    internal class TPIAntennaTypes : TPIObject, ICanShow
     {
         internal TPIAntennaTypes()
         {
@@ -452,7 +452,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIAntenna : TPIObject, ICanShow, ICanSet
+    internal class TPIAntenna : TPIObject, ICanShow, ICanSet
     {
         internal TPIAntenna()
         {
@@ -469,7 +469,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIRtkControls : TPIObject, ICanShow, ICanSet
+    internal class TPIRtkControls : TPIObject, ICanShow, ICanSet
     {
         internal TPIRtkControls()
         {
@@ -486,7 +486,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIIoPorts : TPIObject, ICanShow
+    internal class TPIIoPorts : TPIObject, ICanShow
     {
         internal TPIIoPorts()
         {
@@ -503,7 +503,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIIoPort : TPIObject, ICanShow, ICanSet, ICanDelete
+    internal class TPIIoPort : TPIObject, ICanShow, ICanSet, ICanDelete
     {
         internal TPIIoPort()
         {
@@ -520,7 +520,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIRefStation : TPIObject, ICanShow, ICanSet
+    internal class TPIRefStation : TPIObject, ICanShow, ICanSet
     {
         internal TPIRefStation()
         {
@@ -537,7 +537,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIOmniStarSeed : TPIObject, ICanSet
+    internal class TPIOmniStarSeed : TPIObject, ICanSet
     {
         internal TPIOmniStarSeed()
         {
@@ -545,7 +545,7 @@ namespace TPI
         }
     }
 
-    public class TPIFirmwareVersion : TPIObject, ICanShow
+    internal class TPIFirmwareVersion : TPIObject, ICanShow
     {
         internal TPIFirmwareVersion()
         {
@@ -562,7 +562,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIFirmwareWarranty : TPIObject, ICanShow, ICanSet
+    internal class TPIFirmwareWarranty : TPIObject, ICanShow, ICanSet
     {
         internal TPIFirmwareWarranty()
         {
@@ -579,7 +579,7 @@ namespace TPI
         #endregion
     }
 
-    public class TPIFirmwareFile : TPIObject, ICanUpload
+    internal class TPIFirmwareFile : TPIObject, ICanUpload
     {
         internal TPIFirmwareFile()
         {

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Timers;
 using TPI;
 
 namespace TestConsole
@@ -8,25 +8,30 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
+            Console.SetBufferSize(200, Int16.MaxValue - 1);
+
             var receiver = new TPIReceiver("10.3.97.150", "admin", "password");
-            var shows = new List<ICanShow>()
+            var timer = new Timer(100);
+            timer.Elapsed += (sender, e) =>
             {
-                receiver.Create<TPISerialNumber>(),
-                receiver.Create<TPIUtcTime>(),
-                receiver.Create<TPIGpsTime>(),
-                receiver.Create<TPIPosition>(),
-                receiver.Create<TPIVoltages>(),
-                receiver.Create<TPITemperature>(),
-                receiver.Create<TPICommands>()
+                Output("Position", receiver.Position);
             };
 
-            shows.ForEach(x =>
-                {
-                    Console.WriteLine(x.Show().Result);
-                    Console.ReadKey();
-                });
-            
+            Output("SN", receiver.SN);
+            Output("RxType", receiver.RxType);
+            Output("UtcTime", receiver.UtcTime);
+            Output("GpsTime", receiver.GpsTime);
+
+            timer.Start();
             Console.ReadKey();
+        }
+
+        static void Output(string key, object value)
+        {
+            Console.Write("---");
+            Console.Write(key);
+            Console.Write("---\n");
+            Console.WriteLine(value);
         }
     }
 }

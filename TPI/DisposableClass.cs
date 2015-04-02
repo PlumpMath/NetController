@@ -21,12 +21,12 @@ namespace TPI
             FreeResources(false);
         }
 
-        public virtual void FreeManagedResources()
+        protected virtual void FreeManagedResources()
         {
 
         }
 
-        public virtual void FreeUnManagedResources()
+        protected virtual void FreeUnManagedResources()
         {
 
         }
