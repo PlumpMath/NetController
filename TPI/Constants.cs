@@ -11,6 +11,7 @@ namespace TPI
         public const string TPI_Msg_ElevationMask_OutOfRange = "Elevation Mask is in degrees, between -10 and 90";
         public const string TPI_Msg_PdopMask_OutOfRange = "PDOP is a unitless measurement. Valid range is 0 to 99.";
         public const string TPI_Msg_Operation_Failed = "Operation Failed";
+        public const string TPI_Msg_Antenna_MeasMethod_NotSupport = "The measure method is not supported by this antenna";
 
         // 0: protocol, 'http' or 'https'
         // 1: address, name or ip
@@ -94,5 +95,15 @@ namespace TPI
         // temp
         public const string TPI_Regex_Parse_Mask = @"mask=(?<mask>(\d+))";
         public const string TPI_Regex_Parse_Mask_Mask = "mask";
+
+        // type, name, measMethods
+        public const string TPI_Regex_Parse_AntennaTypes = @"type=(?<type>(\d+))\s+name='(?<name>(.+))'\s+measMethods=(?<measMethods>(\S+))";
+        public const string TPI_Regex_Parse_AntennaSetting = @"type=(?<type>(\d+))\s+name=""(?<name>(.+))""\s+height=(?<height>([\-\+]?[0-9]*(\.[0-9]+)?))\s+measMethod=(?<measMethod>(\S+))\s+serial=""(?<serial>(\S+))""";
+        public const string TPI_Regex_Parse_Antenna_Type = "type";
+        public const string TPI_Regex_Parse_Antenna_Name = "name";
+        public const string TPI_Regex_Parse_Antenna_MeasMethods = "measMethods";
+        public const string TPI_Regex_Parse_Antenna_MeasMethod = "measMethod";
+        public const string TPI_Regex_Parse_Antenna_Height = "height";
+        public const string TPI_Regex_Parse_Antenna_SN = "serial";
     }
 }

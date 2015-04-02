@@ -37,6 +37,18 @@ namespace TestConsole
             receiver.PdopMask = DateTime.Now.Second;
             Output("PdopMask After Update", receiver.PdopMask);
 
+            //Output("AntennaTypes", receiver.AntennaTypes);
+            var ant = receiver.Antenna;
+            Output("AntennaSetting", ant);
+            var newant = receiver.AntennaTypes[85];
+            ant.Type = newant.Type;
+            ant.Name = newant.Name;
+            ant.MeasureMethod = newant.MeasureMethods[0];
+            ant.Height = ant.Height + 0.1;
+            receiver.Antenna = ant;
+            Output("AntennaSetting After Update", receiver.Antenna);
+            //Output("Restart Result", receiver.RestartReceiver());
+
             //timer.Start();
             Console.ReadKey();
         }

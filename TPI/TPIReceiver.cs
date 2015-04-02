@@ -67,126 +67,6 @@ namespace TPI
         Upload
     }
 
-    public class GpsTime
-    {
-        /// <summary>
-        /// Gpsweek is the number of weeks since Sunday 1980/Jan/06, the start of GPS week zero.
-        /// </summary>
-        public int GpsWeek { get; private set; }
-        /// <summary>
-        /// WeekSeconds is the number of seconds elapsed since the beginning of the current week. Range is from 0 to 604799.
-        /// </summary>
-        public int WeekSeconds { get; private set; }
-
-        public GpsTime(int week, int weekSeconds)
-        {
-            GpsWeek = week;
-            WeekSeconds = weekSeconds;
-        }
-
-        public override string ToString()
-        {
-            return GpsWeek + "," + WeekSeconds;
-        }
-    }
-
-    public class Position
-    {
-        /// <summary>
-        /// The time tag when this position was determined.
-        /// </summary>
-        public int GpsWeek { get; internal set; }
-        /// <summary>
-        /// The time tag when this position was determined.
-        /// </summary>
-        public double WeekSeconds { get; internal set; }
-        /// <summary>
-        /// Decimal Degrees
-        /// </summary>
-        public double Latitude { get; internal set; }
-        /// <summary>
-        /// Decimal Degrees
-        /// </summary>
-        public double Longitude { get; internal set; }
-        /// <summary>
-        /// Altitude is in meters above the WGS84 Ellipsoid
-        /// </summary>
-        public double Altitude { get; internal set; }
-        /// <summary>
-        /// In milliseconds
-        /// </summary>
-        public double ClockOffset { get; internal set; }
-        /// <summary>
-        /// In parts per million
-        /// </summary>
-        public double ClockDrift { get; internal set; }
-        /// <summary>
-        /// In meters per second
-        /// </summary>
-        public double VelNorth { get; internal set; }
-        /// <summary>
-        /// In meters per second
-        /// </summary>
-        public double VelEast { get; internal set; }
-        /// <summary>
-        /// In meters per second
-        /// </summary>
-        public double VelUp { get; internal set; }
-        /// <summary>
-        /// DOP values are unitless
-        /// </summary>
-        public double PDOP { get; internal set; }
-        /// <summary>
-        /// DOP values are unitless
-        /// </summary>
-        public double HDOP { get; internal set; }
-        /// <summary>
-        /// DOP values are unitless
-        /// </summary>
-        public double VDOP { get; internal set; }
-        /// <summary>
-        /// DOP values are unitless
-        /// </summary>
-        public double TDOP { get; internal set; }
-        /// <summary>
-        /// Qualifiers can contain several strings, separated by commas.
-        /// </summary>
-        /// <remarks>
-        /// 'WGS84' specifies the coordinate system.
-        /// '3D' specifies the type of fix done. It could be 2D if there are insufficient satellites for a 3D fix.
-        /// 'Autonomous' specifies that no differential corrections were made. Otherwise, differential corrections were used with possible types DGPS, BCN-DGPS, SBAS-DGPS, RTK-Fix, RTK-Float, etc.
-        /// </remarks>
-        public string Qualifiers { get; internal set; }
-
-        public override string ToString()
-        {
-            return string.Format("Qualifiers: {14}\nLatitude:{2}\nLongitude:{3}\nAltitude:{4}\nClockOffset:{5}\nGpsWeek:{0}\nWeekSeconds:{1}\nClockDrift:{6}\nVelNorth:{7}\nVelEast:{8}\nVelUp:{9}\nPDOP:{10}\nHDOP:{11}\nVDOP:{12}\nTDOP:{13}", GpsWeek, WeekSeconds, Latitude, Longitude, Altitude, ClockOffset, ClockDrift, VelNorth, VelEast, VelUp, PDOP, HDOP, VDOP, TDOP, Qualifiers);
-        }
-    }
-
-    public class Voltage
-    {
-        /// <summary>
-        /// The number of voltage ports shown is receiver type dependent.
-        /// </summary>
-        public string Port { get; internal set; }
-
-        /// <summary>
-        /// In Voltage
-        /// </summary>
-        public double Volt { get; internal set; }
-
-        /// <summary>
-        /// In hundred percent %
-        /// </summary>
-        public double Capacity { get; internal set; }
-
-        public override string ToString()
-        {
-            return string.Format("{0}, {1}v, {2}%", Port, Volt, Capacity);
-        }
-    }
-
     public class TPIReceiver : DisposableClass
     {
         private HttpClient client;
@@ -364,6 +244,8 @@ namespace TPI
 
         public DateTime FirmwareWarrantyDate { get; private set; }
 
+        public AntennaTypeCollection AntennaTypes { get; private set; }
+
         /// <summary>
         /// The Elevation Mask defines an elevation limit below which GNSS satellites will not be tracked or used.
         /// Mask is in degrees, between -10 and 90.
@@ -387,7 +269,7 @@ namespace TPI
                 if (value < -10 || value > 90)
                     throw new ArgumentOutOfRangeException("ElevationMask", Constants.TPI_Msg_ElevationMask_OutOfRange);
                 bool failed = false;
-                ExecuteCommand(TPIVerbTypes.Set, TPIObjectTypes.ElevationMask, "&" + Constants.TPI_Regex_Parse_Mask_Mask + "=" + value, pattern: Constants.TPI_Regex_Parse_Mask).ContinueWith(x =>
+                ExecuteCommand(TPIVerbTypes.Set, TPIObjectTypes.ElevationMask, TPIParameters.MakeOneParameter(Constants.TPI_Regex_Parse_Mask_Mask, value), Constants.TPI_Regex_Parse_Mask).ContinueWith(x =>
                 {
                     if (x.Status != TaskStatus.RanToCompletion || x.Result == null)
                     {
@@ -401,7 +283,7 @@ namespace TPI
 
         /// <summary>
         /// The PDOP Mask defines a limit for the PDOP of a position fix. Position fixes with a PDOP that exceeds the mask will not be logged to data files, streamed to I/O ports, shown on various User Interfaces, etc.
-        /// The desired PDOP Mask. PDOP is a unitless measurement. Valid range is 0 to 99.
+        /// The desired PDOP Mask. PDOP is a unit less measurement. Valid range is 0 to 99.
         /// </summary>
         public int PdopMask
         {
@@ -422,7 +304,54 @@ namespace TPI
                 if (value < 0 || value > 99)
                     throw new ArgumentOutOfRangeException("PdopMask", Constants.TPI_Msg_PdopMask_OutOfRange);
                 bool failed = false;
-                ExecuteCommand(TPIVerbTypes.Set, TPIObjectTypes.PdopMask, "&" + Constants.TPI_Regex_Parse_Mask_Mask + "=" + value, pattern: Constants.TPI_Regex_Parse_Mask).ContinueWith(x =>
+                ExecuteCommand(TPIVerbTypes.Set, TPIObjectTypes.PdopMask, TPIParameters.MakeOneParameter(Constants.TPI_Regex_Parse_Mask_Mask, value), Constants.TPI_Regex_Parse_Mask).ContinueWith(x =>
+                {
+                    if (x.Status != TaskStatus.RanToCompletion || x.Result == null)
+                    {
+                        failed = true;
+                    }
+                }).Wait();
+                if (failed)
+                    throw new Exception(Constants.TPI_Msg_Operation_Failed);
+            }
+        }
+
+        public AntennaSetting Antenna
+        {
+            get
+            {
+                AntennaSetting s = null;
+                ExecuteCommand(TPIVerbTypes.Show, TPIObjectTypes.Antenna, pattern: Constants.TPI_Regex_Parse_AntennaSetting).ContinueWith(x =>
+                {
+                    if (x.Status == TaskStatus.RanToCompletion && x.Result.Count > 0)
+                    {
+                        s = new AntennaSetting()
+                        {
+                            Type = int.Parse(x.Result[0].Groups[Constants.TPI_Regex_Parse_Antenna_Type].Value),
+                            Name = x.Result[0].Groups[Constants.TPI_Regex_Parse_Antenna_Name].Value,
+                            MeasureMethod = x.Result[0].Groups[Constants.TPI_Regex_Parse_Antenna_MeasMethod].Value,
+                            Height = double.Parse(x.Result[0].Groups[Constants.TPI_Regex_Parse_Antenna_Height].Value),
+                            SN = x.Result[0].Groups[Constants.TPI_Regex_Parse_Antenna_SN].Value
+                        };
+                    }
+                }).Wait();
+                return s;
+            }
+            set
+            {
+                var type = AntennaTypes[value.Type];
+                if (type == null || type.Name != value.Name || !type.IsSupport(value.MeasureMethod))
+                    throw new ArgumentException("Antenna", Constants.TPI_Msg_Antenna_MeasMethod_NotSupport);
+                bool failed = false;
+                ExecuteCommand(TPIVerbTypes.Set, TPIObjectTypes.Antenna,
+                    string.Join("",
+                    TPIParameters.MakeOneParameter(Constants.TPI_Regex_Parse_Antenna_Type, value.Type),
+                    //TPIParameters.MakeOneParameter(Constants.TPI_Regex_Parse_Antenna_Name, value.Name),
+                    TPIParameters.MakeOneParameter(Constants.TPI_Regex_Parse_Antenna_Height, value.Height),
+                    TPIParameters.MakeOneParameter(Constants.TPI_Regex_Parse_Antenna_MeasMethod, value.MeasureMethod)
+                    //TPIParameters.MakeOneParameter(Constants.TPI_Regex_Parse_Antenna_SN, value.SN)
+                    ),
+                    Constants.TPI_Regex_Parse_AntennaSetting).ContinueWith(x =>
                 {
                     if (x.Status != TaskStatus.RanToCompletion || x.Result == null)
                     {
@@ -481,7 +410,26 @@ namespace TPI
                 {
                     FirmwareWarrantyDate = DateTime.Parse(x.Result[0].Groups[Constants.TPI_Regex_Parse_FirmwareWarranty_Date].Value);
                 }
-            })
+            }),
+
+            // read antenna types
+            ExecuteCommand(TPIVerbTypes.Show, TPIObjectTypes.AntennaTypes, pattern: Constants.TPI_Regex_Parse_AntennaTypes).ContinueWith(x =>
+              {
+                  if (x.Status == TaskStatus.RanToCompletion)
+                  {
+                      List<AntennaType> types = new List<AntennaType>();
+                      foreach (Match match in x.Result)
+                      {
+                          types.Add(new AntennaType()
+                              {
+                                  Type = int.Parse(match.Groups[Constants.TPI_Regex_Parse_Antenna_Type].Value),
+                                  Name = match.Groups[Constants.TPI_Regex_Parse_Antenna_Name].Value,
+                                  MeasureMethods = match.Groups[Constants.TPI_Regex_Parse_Antenna_MeasMethods].Value.Split(',')
+                              });
+                      }
+                      AntennaTypes = new AntennaTypeCollection(types);
+                  }
+              })
             }, ts => { });
         }
 
@@ -528,6 +476,29 @@ namespace TPI
         internal async Task<string> GetStringAsync(string verb, string objName, string parameters = "")
         {
             return await client.GetStringAsync(string.Format(Constants.TPI_Format_Relative_Uri, verb, objName, parameters));
+        }
+
+        #endregion
+
+        #region Public
+        /// <summary>
+        /// Restarts (reboots) the GNSS Receiver. This causes the system to shut down all active operations. The GNSS Receiver then reboots and, after approximately 30 seconds, resumes normal operations. This is roughly equivalent to pressing the front panel power button, waiting for the system to shut down, and then pressing the button again to turn the system back on. Resetting the system will have a serious impact on data logging and I/O streaming. Any active Data Logging Sessions will be halted during the reboot. Active Data Logging Sessions should automatically resume logging, but there will be missing data. Likewise I/O streams can experience a disruption. There can be missing data, and TCP or UDP connections may not be re-established automatically. The response to the restart command will come back immediately. The actual system shutdown will be delayed for about five seconds.
+        /// </summary>
+        /// <remarks>
+        /// Programmatic commands sent after Reset System will be rejected until the system has time to completely restart. This will take approximately 30 seconds.
+        /// </remarks>
+        /// <returns>true:Successfully send the command to receiver.</returns>
+        public bool RestartReceiver()
+        {
+            bool failed = false;
+            ExecuteCommand(TPIVerbTypes.Reset, TPIObjectTypes.System).ContinueWith(x =>
+            {
+                if (x.Status != TaskStatus.RanToCompletion || x.Result == null)
+                {
+                    failed = true;
+                }
+            }).Wait();
+            return !failed;
         }
 
         #endregion

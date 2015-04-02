@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="DisposableClass.cs" />
+    <Compile Include="TPIDataStructures.cs" />
     <Compile Include="TPIReceiver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TPIObject.cs" />
