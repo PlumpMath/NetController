@@ -1,0 +1,5 @@
+﻿Multi-resolution apps for Windows Phone 8 https://msdn.microsoft.com/library/windows/apps/jj206974(v=vs.105).aspx
+
+Transforming SVG graphics to XAML Metro Icons http://blogs.u2u.be/diederik/post/2012/07/26/Transforming-SVG-graphics-to-XAML-Metro-Icons.aspx
+
+https://thenounproject.com/search/?q=satellite 
