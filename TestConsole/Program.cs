@@ -12,6 +12,7 @@ namespace TestConsole
             //Console.SetBufferSize(80, Int16.MaxValue - 1);
 
             var receiver = new TPIReceiver("10.3.97.150", "admin", "password");
+            //var receiver = new TPIReceiver("192.168.142.1", "admin", "password");
             var timer = new Timer(500);
             timer.Elapsed += (sender, e) =>
             {
@@ -30,28 +31,28 @@ namespace TestConsole
             Output("FirmwareWarrantyDate", receiver.FirmwareWarrantyDate);
 
             Output("ElevationMask", receiver.ElevationMask);
-            receiver.ElevationMask = DateTime.Now.Second;
-            Output("ElevationMask After Update", receiver.ElevationMask);
+            //receiver.ElevationMask = DateTime.Now.Second;
+            //Output("ElevationMask After Update", receiver.ElevationMask);
 
             Output("PdopMask", receiver.PdopMask);
-            receiver.PdopMask = DateTime.Now.Second;
-            Output("PdopMask After Update", receiver.PdopMask);
+            //receiver.PdopMask = DateTime.Now.Second;
+            //Output("PdopMask After Update", receiver.PdopMask);
 
             //Output("AntennaTypes", receiver.AntennaTypes);
             var ant = receiver.Antenna;
             Output("AntennaSetting", ant);
-            var newant = receiver.AntennaTypes[85];
-            ant.Type = newant.Type;
-            ant.Name = newant.Name;
-            ant.MeasureMethod = newant.MeasureMethods[0];
-            ant.Height = ant.Height + 0.1;
-            receiver.Antenna = ant;
-            Output("AntennaSetting After Update", receiver.Antenna);
+            //var newant = receiver.AntennaTypes[85];
+            //ant.Type = newant.Type;
+            //ant.Name = newant.Name;
+            //ant.MeasureMethod = newant.MeasureMethods[0];
+            //ant.Height = ant.Height + 0.1;
+            //receiver.Antenna = ant;
+            //Output("AntennaSetting After Update", receiver.Antenna);
 
             Output("TrackingSatellites", receiver.TrackingSatellites);
 
             //Output("Restart Result", receiver.RestartReceiver());
-            //timer.Start();
+            timer.Start();
             Console.ReadKey();
         }
 
